@@ -1,4 +1,4 @@
-export class Main extends Component {
+export class ToolbarItem extends Component {
   constructor(props) {
     super(props);
     // Default Props :
@@ -14,7 +14,7 @@ export class Main extends Component {
     )
   }
 }
-export class Menu extends Component {
+export class ToolbarMenu extends Component {
   constructor(props) {
     super(props);
     // Default Props :

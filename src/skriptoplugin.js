@@ -9,11 +9,9 @@ var process = require("process");
 var browserify = require('browserify');
 
 var buildAction = (src, output) => {
-  console.log(src, output);
   console.log('Building plugin');
   var sourceRel = src;
   var destRel = output;
-  console.log(sourceRel, destRel);
   var tempRel = 'temp/';
 
   if (path.isAbsolute(sourceRel)) {
@@ -27,6 +25,9 @@ var buildAction = (src, output) => {
     destPath = path.join(process.cwd(), destRel);
   }
   var tempPath = path.join(process.cwd(), tempRel);
+
+  console.log('Source path : ', sourcePath);
+  console.log('Destination path : ', destPath);
 
 
   var babelOptions = {
@@ -44,6 +45,12 @@ var buildAction = (src, output) => {
 
   /* Files sorting and babel */
   fs.readdirSync(sourcePath).forEach(file => {
+    if (!fs.existsSync(destPath)) {
+      console.log('[plugin directory] making plugin directory...');
+      fs.mkdirSync(destPath);
+      console.log('[plugin directory] making plugin directory...done');
+    }
+
     if (file.endsWith('.js')){
       if (!fs.existsSync(tempPath)) {
         console.log('[babel conversion] making temporary directory...');
@@ -61,11 +68,6 @@ var buildAction = (src, output) => {
     } else if (file==="node_modules"){
       //just in case
     } else {
-      if (!fs.existsSync(destPath)) {
-        console.log('[plugin directory] making plugin directory...');
-        fs.mkdirSync(destPath);
-        console.log('[plugin directory] making plugin directory...done');
-      }
       console.log('[plugin directory] copying source file to plugin...');
       fs.copyFileSync(path.join(sourcePath, file), path.join(destPath, file))
       console.log('[plugin directory] copying source file to plugin...done');
@@ -83,9 +85,9 @@ var buildAction = (src, output) => {
   b.bundle().pipe(bundlePath);
 
   /* Remove temp file */
-  console.log('[clearing up]');
 
   bundlePath.on('finish', function(){
+    console.log('[clearing up]');
     console.log('[clearing up] deleting temporary files...');
     for (var i = 0; i < jsList.length; i++) {
       fs.unlinkSync(jsList[i])
@@ -100,7 +102,7 @@ var buildAction = (src, output) => {
 
 console.log('Welcome to the Skripto Plugin Builder');
 program
-  .version('0.0.1')
+  .version('0.0.2')
   .command('build <src> <output>')
   .description('Description.')
   .option('-s, --src [src]', 'Source code directory; default is src/', 'src/')

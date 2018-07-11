@@ -1,6 +1,6 @@
 {
   "name": "skripto-plugin",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "license": "MIT",
   "bin": {
     "skripto-plugin": "src/skriptoplugin.js"
