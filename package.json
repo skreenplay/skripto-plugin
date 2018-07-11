@@ -1,9 +1,9 @@
 {
-  "name": "skripto-plugin-builder",
+  "name": "skripto-plugin",
   "version": "0.0.1",
   "license": "MIT",
-  "bin":{
-    "skripto-plugin":"node src/skriptoplugin.js"
+  "bin": {
+    "skripto-plugin": "src/skriptoplugin.js"
   },
   "dependencies": {
     "babel-core": "^6.26.3",
