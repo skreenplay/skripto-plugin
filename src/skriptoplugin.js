@@ -13,13 +13,12 @@ var buildAction = (src, output) => {
   var sourceRel = src;
   var destRel = output;
   var tempRel = 'temp/';
-
   if (path.isAbsolute(sourceRel)) {
     var sourcePath = sourceRel
   } else {
     sourcePath = path.join(process.cwd(), sourceRel);
   }
-  if (path.isAbsolute(sourceRel)) {
+  if (path.isAbsolute(destRel)) {
     var destPath = destRel
   } else {
     destPath = path.join(process.cwd(), destRel);
@@ -36,28 +35,31 @@ var buildAction = (src, output) => {
       "react"
     ],
     plugins: [
-      "transform-react-jsx"
+      "transform-react-jsx",
+      "inline-import-data-uri"
     ]
   }
 
 
+  var tempfiles = []
   var jsList = []
 
   /* Files sorting and babel */
   fs.readdirSync(sourcePath).forEach(file => {
     if (!fs.existsSync(destPath)) {
-      console.log('[plugin directory] making plugin directory...');
+      console.log('[init] making plugin directory...');
       fs.mkdirSync(destPath);
-      console.log('[plugin directory] making plugin directory...done');
+      console.log('[init] making plugin directory...done');
     }
+    if (!fs.existsSync(tempPath)) {
+      console.log('[init] making temporary directory...');
+      fs.mkdirSync(tempPath);
+      console.log('[init] making temporary directory...done');
+    }
+    fs.copyFileSync(path.join(sourcePath, file), path.join(tempPath, file))
+    tempfiles.push(path.join(tempPath, file));
 
     if (file.endsWith('.js')){
-      if (!fs.existsSync(tempPath)) {
-        console.log('[babel conversion] making temporary directory...');
-        fs.mkdirSync(tempPath);
-        console.log('[babel conversion] making temporary directory...done');
-
-      }
       console.log('[babel conversion] js file conversion...');
       var filePath = path.join(sourcePath, file);
       var newfilePath = path.join(tempPath, file);
@@ -89,8 +91,8 @@ var buildAction = (src, output) => {
   bundlePath.on('finish', function(){
     console.log('[clearing up]');
     console.log('[clearing up] deleting temporary files...');
-    for (var i = 0; i < jsList.length; i++) {
-      fs.unlinkSync(jsList[i])
+    for (var i = 0; i < tempfiles.length; i++) {
+      fs.unlinkSync(tempfiles[i])
     }
     console.log('[clearing up] deleting temporary files...done');
 
@@ -102,7 +104,7 @@ var buildAction = (src, output) => {
 
 console.log('Welcome to the Skripto Plugin Builder');
 program
-  .version('0.0.2')
+  .version('0.0.1')
   .command('build <src> <output>')
   .description('Description.')
   .option('-s, --src [src]', 'Source code directory; default is src/', 'src/')

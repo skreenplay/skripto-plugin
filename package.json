@@ -5,8 +5,13 @@
   "bin": {
     "skripto-plugin": "src/skriptoplugin.js"
   },
+  "scripts": {
+    "test": "src/skriptoplugin.js build example/example-plugin/src/ example/example-plugin/plugin/",
+    "publish": "src/skriptoplugin.js build example/example-plugin/src/ /Applications/Skripto.app/Contents/Resources/plugins/exampleplugin/"
+  },
   "dependencies": {
     "babel-core": "^6.26.3",
+    "babel-plugin-inline-import-data-uri": "^1.0.1",
     "babel-plugin-transform-react-jsx": "^6.24.1",
     "babel-preset-es2015": "^6.24.1",
     "babel-preset-react": "^6.24.1",

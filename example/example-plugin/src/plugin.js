@@ -1,3 +1,9 @@
+// imports from sandbox
+const fetch = imports.fetch;
+// Local imports
+import image from './image.png';
+import Hello from './other.js';
+
 export class ToolbarItem extends Component {
   constructor(props) {
     super(props);
@@ -8,8 +14,7 @@ export class ToolbarItem extends Component {
   render() {
     return (
       <div>
-        //image
-        image
+        <img src={image} style={{marginLeft:8, marginTop:5, width:28, height:28,cursor:'pointer'}} />
       </div>
     )
   }
@@ -24,7 +29,9 @@ export class ToolbarMenu extends Component {
   render() {
     return (
       <div>
-        o
+        <input type="text"></input>
+        <button>press me</button>
+        <p>{Hello('user')}</p>
       </div>
     )
   }

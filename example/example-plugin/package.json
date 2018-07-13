@@ -1,0 +1,12 @@
+{
+  "name": "skripto-plugin-exampleplugin",
+  "version": "0.0.1",
+  "license": "MIT",
+  "scripts": {
+    "build": "skripto-plugin build src/ plugin/",
+    "publish": "skripto-plugin build src/ /Applications/Skripto.app/Contents/Resources/plugins/exampleplugin/"
+  },
+  "dependencies": {
+    "skripto-plugin": "0.0.1"
+  }
+}

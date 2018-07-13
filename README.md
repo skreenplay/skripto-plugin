@@ -3,12 +3,14 @@ skripto-plugin
 
 Use this tool to build plugins for [skripto](https://github.com/skreenplay/skripto)'s desktop app.
 
-## Install
+##  Install
+
 ```
 npm i --save skripto-plugin
 ```
 
-## Plugin Structure
+##  Plugin Structure
+
 ```  
 |-- yourplugin/
     |-- package.json
@@ -37,7 +39,7 @@ __package.json__
 }
 ```
 
-### Build the plugin (in `src/`)
+## Build the plugin (in `src/`)
 
 __manifest.json__
 
